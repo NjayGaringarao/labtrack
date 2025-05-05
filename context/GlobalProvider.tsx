@@ -71,9 +71,9 @@ export const GlobalProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  // useEffect(() => {
-  //   initializeGlobalState();
-  // }, []);
+  useEffect(() => {
+    initializeGlobalState();
+  }, []);
 
   useEffect(() => {
     const promptInternetStatus = async () => {
