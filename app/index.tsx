@@ -1,3 +1,4 @@
+import { router } from "expo-router";
 import { Text, View } from "react-native";
 
 export default function Index() {
@@ -9,7 +10,12 @@ export default function Index() {
         alignItems: "center",
       }}
     >
-      <Text className="text-2xl">Edit app/index.tsx to edit this screen.</Text>
+      <Text
+        className="text-2xl"
+        onPress={() => router.navigate("/(auth)/sign_in")}
+      >
+        Edit app/index.tsx to edit this screen.
+      </Text>
     </View>
   );
 }
