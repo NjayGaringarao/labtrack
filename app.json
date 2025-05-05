@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "labtrack",
+    "name": "LABTRACK",
     "slug": "labtrack",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -16,7 +16,8 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "edgeToEdgeEnabled": true
+      "edgeToEdgeEnabled": true,
+      "package": "com.prmsu.labtrack"
     },
     "web": {
       "bundler": "metro",
@@ -33,10 +34,23 @@
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
         }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Labtrack will access your photos to upload them to the cloud."
+        }
       ]
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "f0933acb-72c5-4785-86d2-fdcbe7828899"
+      }
+    },
+    "owner": "zero-dev"
   }
 }
