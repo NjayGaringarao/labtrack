@@ -6,6 +6,8 @@ import React, { useEffect } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Toast from "react-native-toast-message";
 import "../global.css";
+import { StatusBar } from "expo-status-bar";
+import color from "@/constants/color";
 
 export default function RootLayout() {
   const [loaded] = useFonts({
@@ -32,6 +34,7 @@ export default function RootLayout() {
         </Stack>
       </GlobalProvider>
       <Toast config={customToastConfig} />
+      <StatusBar backgroundColor={color.primary} style="auto" />
     </SafeAreaView>
   );
 }

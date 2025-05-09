@@ -17,7 +17,7 @@ const customToastConfig = {
         style={{
           width: "100%",
           height: "100%",
-          backgroundColor: color.uBlack,
+          backgroundColor: color.secondary,
           flexDirection: "row",
           alignItems: "center",
           justifyContent: "center",
@@ -35,7 +35,7 @@ const customToastConfig = {
             justifyContent: "center",
           }}
         >
-          <AntDesign name="checkcircle" size={42} color={color.white} />
+          <AntDesign name="checkcircle" size={42} color={color.background} />
         </View>
         <View
           style={{
@@ -44,10 +44,12 @@ const customToastConfig = {
             paddingHorizontal: 4,
           }}
         >
-          <Text style={{ fontSize: 18, fontWeight: "600", color: color.white }}>
+          <Text
+            style={{ fontSize: 18, fontWeight: "600", color: color.uBlack }}
+          >
             {text1}
           </Text>
-          <Text style={{ fontSize: 12, color: color.white, lineHeight: 12 }}>
+          <Text style={{ fontSize: 12, color: color.uGray, lineHeight: 12 }}>
             {text2}
           </Text>
         </View>
@@ -68,7 +70,7 @@ const customToastConfig = {
         style={{
           width: "100%",
           height: "100%",
-          backgroundColor: color.uBlack,
+          backgroundColor: color.secondary,
           flexDirection: "row",
           alignItems: "center",
           justifyContent: "center",
@@ -86,7 +88,11 @@ const customToastConfig = {
             justifyContent: "center",
           }}
         >
-          <AntDesign name="exclamationcircle" size={42} color={color.white} />
+          <AntDesign
+            name="exclamationcircle"
+            size={42}
+            color={color.background}
+          />
         </View>
         <View
           style={{
@@ -95,12 +101,12 @@ const customToastConfig = {
             paddingHorizontal: 4,
           }}
         >
-          <Text style={{ fontSize: 18, fontWeight: "600", color: color.white }}>
+          <Text
+            style={{ fontSize: 18, fontWeight: "600", color: color.uBlack }}
+          >
             {text1}
           </Text>
-          <Text
-            style={{ fontSize: 12, color: color.uGrayLight, lineHeight: 12 }}
-          >
+          <Text style={{ fontSize: 12, color: color.uGray, lineHeight: 12 }}>
             {text2}
           </Text>
         </View>

@@ -42,12 +42,16 @@ const FormField: React.FC<TextBoxProps> = ({
 
   return (
     <View className={containerStyles}>
-      <Text className={`${titleTextStyles} ${title ? "" : "hidden"}`}>
+      <Text
+        className={`font-semibold text-uBlack text-base mb-1 ${titleTextStyles} ${
+          title ? "" : "hidden"
+        }`}
+      >
         {title}
       </Text>
       <View className="w-full">
         <View
-          className={` px-4 h-10 bg-white rounded-lg border-2 border-primary ${boxStyles} flex-row`}
+          className={` px-4 h-12 bg-white rounded-lg border-2 border-primary ${boxStyles} flex-row`}
         >
           <TextInput
             className={`flex-1 text-uBlack font-medium ${
@@ -60,7 +64,6 @@ const FormField: React.FC<TextBoxProps> = ({
             secureTextEntry={isPassword && !showPassword}
             style={{
               textAlignVertical: "center",
-              letterSpacing: 1,
             }}
             {...props}
             maxLength={maxLength}

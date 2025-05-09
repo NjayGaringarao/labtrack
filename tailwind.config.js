@@ -9,7 +9,7 @@ module.exports = {
         background: "#CFFCF9",
         secondary: "#9DCAC5",
         panel: "#A6CDC6",
-        uBlack: "#1f2937",
+        uBlack: "#333333",
         uGray: "#4b5563",
         uGrayLight: "#9ca3af",
         failed: "#dc2626",

@@ -49,7 +49,6 @@ export const signUp = async ({
 };
 
 export const signIn = async (
-  role: string,
   user_id: string,
   password: string,
   initializeGlobalState: () => Promise<void>
@@ -57,27 +56,24 @@ export const signIn = async (
   try {
     const credential = await getDocument(
       env.DATABASE_PRIMARY,
-      env.COLLECTION_USER_CREDENTIALS,
+      env.COLLECTION_CREDENTIALS,
       user_id
     );
 
     const session = await signInUser(credential.email, password);
     await initializeGlobalState();
-    return session;
   } catch (error) {
     if (
-      error ===
+      error ==
       "AppwriteException: Document with the requested ID could not be found."
     ) {
       throw "The provided ID is not a registered account.";
     } else if (
-      error ===
-        "AppwriteException: Invalid credentials. Please check the email and password." ||
-      "AppwriteException: Invalid `password` param: Password must be between 8 and 256 characters long."
+      error ==
+      "AppwriteException: Invalid credentials. Please check the email and password."
     ) {
       throw "Incorrect password.";
     } else {
-      console.log("auth.studentSignIn : ", error);
       throw "There was a problem signing in to your account.";
     }
   }

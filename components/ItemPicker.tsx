@@ -19,7 +19,9 @@ const ItemPicker: React.FC<PickerProps> = ({
   children,
 }) => {
   return (
-    <View className={`justify-center h-10 ${containerStyle}`}>
+    <View
+      className={`justify-center h-12 border-2 border-primary rounded-lg bg-white ${containerStyle}`}
+    >
       <Picker
         selectedValue={value}
         onValueChange={onChange}
