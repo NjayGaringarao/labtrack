@@ -11,15 +11,21 @@ import CredentialForm from "./CredentialForm";
 import FaceRegistrationForm from "./FaceRegistrationForm";
 import SummaryForm from "./SummaryForm";
 import image from "@/constants/image";
+import { regex } from "@/constants/regex";
+import { isEmailExisting, isUserIdExisting } from "@/services/credentials";
+import { signUp } from "@/services/auth";
+import { signInUser } from "@/services/appwrite";
+import { useGlobalContext } from "@/context/GlobalProvider";
 
 const SignUpForm = () => {
+  const { initializeGlobalState } = useGlobalContext();
   const [step, setStep] = useState(0);
 
   const [accountType, setAccountType] = useState("STUDENT");
   const [employeeRole, setEmployeeRole] = useState("TEACHING-STAFF");
 
   const [nameForm, setNameForm] = useState({ first: "", middle: "", last: "" });
-
+  const [faceDescriptor, setFaceDescriptor] = useState<string | undefined>();
   const [studentForm, setStudentForm] = useState({
     dep_prog: "CCIT-BSCS",
     year_level: "FIRST",
@@ -34,18 +40,106 @@ const SignUpForm = () => {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  const validateInput = async () => {
+    if (!regex.email.test(credentialForm.email)) {
+      Toast.show({
+        type: "error",
+        text1: "Invalid Email",
+        text2: "Please provide your valid email.",
+        visibilityTime: 5000,
+      });
+      return false;
+    }
+
+    if (!regex.password.test(credentialForm.password)) {
+      Toast.show({
+        type: "error",
+        text1: "Weak Password",
+        text2:
+          "Password should be more than 8 characters long containing alphanumeric and other special characters (_!@#$%^&.,). It should also not be the same with the old password",
+        visibilityTime: 5000,
+      });
+      return false;
+    }
+
+    if (credentialForm.password !== credentialForm.conPassword) {
+      Toast.show({
+        type: "error",
+        text1: "Unmatched password",
+        text2: "Make sure that confirm password matches your given password.",
+        visibilityTime: 5000,
+      });
+      return false;
+    }
+
+    if (await isUserIdExisting(credentialForm.identifier)) {
+      Toast.show({
+        type: "error",
+        text1: "ID Already Used",
+        text2: "Using the same ID for multiple account is not allowed.",
+        visibilityTime: 5000,
+      });
+      return false;
+    }
+
+    if (await isEmailExisting(credentialForm.email)) {
+      Toast.show({
+        type: "error",
+        text1: "Email Already Used",
+        text2: "Please try again with different email.",
+        visibilityTime: 5000,
+      });
+      return false;
+    }
+    return true;
+  };
+
   const signUpHandle = async () => {
     try {
       setIsSubmitting(true);
-      // API submission logic here
+      if (!(await validateInput())) {
+        throw "a";
+      }
+
+      await signUp({
+        id: credentialForm.identifier,
+        name: [
+          nameForm.first,
+          nameForm.middle.length ? nameForm.middle : undefined,
+          nameForm.last,
+        ],
+        email: credentialForm.email,
+        password: credentialForm.password,
+        accountType: accountType,
+        employee_role: employeeRole,
+        year_level: studentForm.year_level,
+        dep_prog: studentForm.dep_prog,
+        face_descriptor: faceDescriptor,
+      });
       Toast.show({
         type: "success",
         text1: "Success",
         text2: "Account created!",
       });
-      router.replace("/(auth)/sign_in");
+
+      try {
+        await signInUser(credentialForm.email, credentialForm.password);
+        await initializeGlobalState();
+      } catch (error) {
+        Toast.show({
+          type: "error",
+          text1: "Sign In Failed",
+          text2: `${error}`,
+        });
+        router.replace("/(auth)/sign_in");
+      }
     } catch (error) {
-      Toast.show({ type: "error", text1: "Sign Up Failed", text2: `${error}` });
+      if (error != "a")
+        Toast.show({
+          type: "error",
+          text1: "Sign Up Failed",
+          text2: `${error}`,
+        });
     } finally {
       setIsSubmitting(false);
     }

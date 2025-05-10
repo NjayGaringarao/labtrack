@@ -3,11 +3,11 @@ export interface ISignUp {
   name: [string, string?, string];
   email: string;
   password: string;
-  user_info: {
-    dep_prog: string;
-    year_level: string;
-    face_descriptor: string;
-  };
+  accountType: string;
+  employee_role?: string;
+  dep_prog?: string;
+  year_level?: string;
+  face_descriptor?: string;
 }
 
 export interface IUpdateUserInfo {

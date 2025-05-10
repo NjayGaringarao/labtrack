@@ -29,6 +29,7 @@ const SummaryForm = ({
   onBackBack,
   onBack,
   onSubmit,
+  isSubmitting,
 }: ISummaryForm) => {
   return (
     <View className="gap-2">
@@ -57,12 +58,14 @@ const SummaryForm = ({
             accountType == "ADMIN" ? () => onBackBack() : () => onBack()
           }
           containerStyles="flex-1"
+          isDisabled={isSubmitting}
         />
 
         <Button
           title="Confirm"
           handlePress={() => onSubmit()}
           containerStyles="flex-1"
+          isDisabled={isSubmitting}
         />
       </View>
     </View>

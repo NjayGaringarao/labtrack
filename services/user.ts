@@ -40,7 +40,7 @@ export const getUserCredential = async (
   try {
     const result = await getDocument(
       env.DATABASE_PRIMARY,
-      env.COLLECTION_USER_CREDENTIALS,
+      env.COLLECTION_CREDENTIALS,
       user_id
     );
 

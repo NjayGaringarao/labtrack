@@ -21,8 +21,8 @@ const AccountTypeForm = ({
       Select Account Type
     </Text>
     <ItemPicker value={accountType} onChange={setAccountType}>
-      <Picker.Item label="Student User" value="STUDENT" />
-      <Picker.Item label="Employee User" value="EMPLOYEE" />
+      <Picker.Item label="Student" value="STUDENT" />
+      <Picker.Item label="Employee" value="EMPLOYEE" />
       <Picker.Item label="Administrator" value="ADMIN" />
     </ItemPicker>
     <View className="flex-row justify-center gap-4 mt-6">

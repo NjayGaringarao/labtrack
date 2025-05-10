@@ -9,7 +9,7 @@ import Toast from "react-native-toast-message";
 import { router } from "expo-router";
 import { regex } from "@/constants/regex";
 
-const LoginForm = () => {
+const SignInForm = () => {
   const { initializeGlobalState } = useGlobalContext();
   const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
@@ -64,7 +64,7 @@ const LoginForm = () => {
           handlePress={signUpHandle}
           isDisabled={
             isSubmitting ||
-            regex.password.test(password) ||
+            !regex.password.test(password) ||
             identifier.length < 10
           }
         />
@@ -79,4 +79,4 @@ const LoginForm = () => {
   );
 };
 
-export default LoginForm;
+export default SignInForm;

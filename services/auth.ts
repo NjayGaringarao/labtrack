@@ -12,18 +12,36 @@ export const signUp = async ({
   name,
   email,
   password,
-  user_info,
+  accountType,
+  employee_role,
+  dep_prog,
+  year_level,
+  face_descriptor,
 }: ISignUp) => {
   try {
-    if (user_info) {
+    if (accountType === "ADMIN") {
       const result = await _executeFunction(
         env.FUNCTION_ACCOUNT,
-        "createUserAccount",
+        "createAdminAccount",
+        {
+          id: id,
+          employee_role: employee_role,
+          name: name,
+          email: email,
+          password: password,
+        }
+      );
+      if (result.responseStatusCode !== 200) throw Error("a");
+    } else if (accountType === "STUDENT") {
+      const result = await _executeFunction(
+        env.FUNCTION_ACCOUNT,
+        "createStudentAccount",
         {
           id: id,
           name: name,
-          dep_prog: user_info.dep_prog,
-          year_level: user_info.year_level,
+          dep_prog: dep_prog,
+          year_level: year_level,
+          face_descriptor,
           email: email,
           password: password,
         }
@@ -32,10 +50,11 @@ export const signUp = async ({
     } else {
       const result = await _executeFunction(
         env.FUNCTION_ACCOUNT,
-        "createAdminAccount",
+        "createEmployeeAccount",
         {
           id: id,
           name: name,
+          employee_role: employee_role,
           email: email,
           password: password,
         }
