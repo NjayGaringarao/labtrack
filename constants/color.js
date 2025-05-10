@@ -8,4 +8,5 @@ export default {
   uGrayLight: "#9ca3af",
   failed: "#dc2626",
   success: "#22c55e",
+  white: "#fff",
 };

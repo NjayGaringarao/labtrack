@@ -1,7 +1,8 @@
 export type Device = {
   id: string;
+  alias: string;
   location: string;
-  isOccupied: boolean;
+  device_session: Session | null;
 };
 
 export type Credentials = {
@@ -16,7 +17,15 @@ export type UserInfo = {
   dep_prog?: string;
   year_level?: string;
   face_descriptor?: string;
-  log_time?: Date | null;
+  employee_role?: string;
+  device_session: Session | null;
+};
+
+export type Session = {
+  id: string;
+  user: UserInfo;
+  device: Device;
+  created_at: Date;
 };
 
 export type Log = {

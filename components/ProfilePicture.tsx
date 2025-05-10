@@ -1,6 +1,6 @@
 import { TouchableOpacity, View, Image, Modal } from "react-native";
 import React, { useEffect, useState } from "react";
-import { User } from "@/services/types/model";
+import { UserInfo } from "@/services/types/model";
 import { getImagePreview } from "@/services/common";
 import { generateAvatar } from "@/services/appwrite";
 import WebView from "react-native-webview";
@@ -10,7 +10,7 @@ import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import color from "@/constants/color";
 
 interface IProfilePictureType {
-  userInfo: User;
+  userInfo: UserInfo;
   onPress?: () => void;
   onLongPress?: () => void;
   containerStyle?: string;
@@ -49,12 +49,10 @@ const ProfilePicture = ({
     <>
       <TouchableOpacity
         onPress={onPressHandle}
-        className={`border rounded-md bg-primary shadow-md shadow-black items-center justify-center ${
-          containerStyle ? containerStyle : "w-32 h-32"
-        }`}
+        className={`border-4 border-primary rounded-full bg-primary shadow-md shadow-black items-center justify-center w-20 h-20 ${containerStyle}`}
       >
         <Image
-          className={`w-3/4 h-3/4 bg-black rounded-full ${imageStyle}`}
+          className={`w-full h-full bg-black rounded-full ${imageStyle}`}
           source={{ uri: imagePreview }}
         />
       </TouchableOpacity>

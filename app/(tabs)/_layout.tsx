@@ -1,9 +1,9 @@
 import color from "@/constants/color";
-import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
-import Ionicons from "@expo/vector-icons/Ionicons";
+import { FontAwesome, MaterialIcons } from "@expo/vector-icons";
 import { Tabs } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import React from "react";
+import { View, Text } from "react-native";
 
 const layout = () => {
   return (
@@ -28,11 +28,20 @@ const layout = () => {
           options={{
             title: "Home",
             tabBarIcon: ({ focused }) => (
-              <Ionicons
-                name={focused ? "home-sharp" : "home-outline"}
-                size={36}
-                color={color.secondary}
-              />
+              <View className="items-center w-20">
+                <MaterialIcons
+                  name={"monitor"}
+                  size={36}
+                  color={focused ? color.background : color.uBlack}
+                />
+                <Text
+                  className={`text-base font-semibold ${
+                    focused ? "text-background" : "text-uBlack"
+                  }`}
+                >
+                  Home
+                </Text>
+              </View>
             ),
           }}
         />
@@ -42,11 +51,20 @@ const layout = () => {
           options={{
             title: "Me",
             tabBarIcon: ({ focused }) => (
-              <FontAwesome5
-                name={focused ? "user-alt" : "user"}
-                size={36}
-                color={color.secondary}
-              />
+              <View className="items-center w-20">
+                <FontAwesome
+                  name={"user-circle-o"}
+                  size={36}
+                  color={focused ? color.background : color.uBlack}
+                />
+                <Text
+                  className={`text-base font-semibold ${
+                    focused ? "text-background" : "text-uBlack"
+                  }`}
+                >
+                  Profile
+                </Text>
+              </View>
             ),
           }}
         />
