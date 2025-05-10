@@ -33,9 +33,7 @@ const CredentialForm = ({
 }: ICredentialForm) => (
   <>
     <TextBox
-      title={
-        accountType === "USER-STUDENT" ? "Student Number" : "Employee Number"
-      }
+      title={accountType === "STUDENT" ? "Student Number" : "Employee Number"}
       textValue={credentialForm.identifier}
       handleChangeText={(e) =>
         setCredentialForm({ ...credentialForm, identifier: e })

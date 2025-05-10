@@ -15,7 +15,7 @@ import image from "@/constants/image";
 const SignUpForm = () => {
   const [step, setStep] = useState(0);
 
-  const [accountType, setAccountType] = useState("USER-STUDENT");
+  const [accountType, setAccountType] = useState("STUDENT");
   const [employeeRole, setEmployeeRole] = useState("TEACHING-STAFF");
 
   const [nameForm, setNameForm] = useState({ first: "", middle: "", last: "" });

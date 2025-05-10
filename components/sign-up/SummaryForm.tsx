@@ -38,7 +38,7 @@ const SummaryForm = ({
         <Text>
           Full Name: {nameForm.first} {nameForm.middle} {nameForm.last}
         </Text>
-        {accountType === "USER-STUDENT" ? (
+        {accountType === "STUDENT" ? (
           <>
             <Text>Program: {studentForm.dep_prog}</Text>
             <Text>Year Level: {studentForm.year_level}</Text>

@@ -24,7 +24,7 @@ const OrgRoleForm = ({
   onBack,
   onNext,
 }: IOrgRoleForm) => {
-  if (accountType === "USER-STUDENT") {
+  if (accountType === "STUDENT") {
     return (
       <>
         <View className="w-full gap-2">
