@@ -53,7 +53,7 @@ const UserHome = () => {
         </Text>
       </View>
 
-      {userInfo.device_session ? <Timer userInfo={userInfo} /> : <LogDevice />}
+      {userInfo.device_session ? <Timer /> : <LogDevice />}
     </View>
   );
 };
