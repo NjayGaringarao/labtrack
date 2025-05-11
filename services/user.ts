@@ -3,6 +3,7 @@ import { toCredentials, toUserInfo } from "@/util/dataTransferObject";
 import { ImagePickerAsset } from "expo-image-picker";
 import { Models } from "react-native-appwrite";
 import {
+  _executeFunction,
   deleteFile,
   getDocument,
   updateDocument,
@@ -99,12 +100,11 @@ export const updateProfile = async (
   }
 };
 
-export const updateUserInfo = async ({
-  user_id,
-  dep_prog,
-  year_level,
-  face_descriptor,
-}: IUpdateUserInfo) => {
+export const updateStudentInfo = async (
+  user_id: string,
+  dep_prog: string,
+  year_level: string
+) => {
   try {
     return await updateDocument(
       env.DATABASE_PRIMARY,
@@ -113,11 +113,52 @@ export const updateUserInfo = async ({
       {
         dep_prog: dep_prog,
         year_level: year_level,
-        face_descriptor: face_descriptor,
       }
     );
   } catch (error) {
-    console.log(`ERROR : (userServices.ts => updateUserInfo) :: ${error}`);
+    console.log(`ERROR : (userServices.ts => updateStudentInfo) :: ${error}`);
     throw error;
+  }
+};
+
+export const updateEmployeeInfo = async (
+  user_id: string,
+  employee_role: string
+) => {
+  try {
+    return await updateDocument(
+      env.DATABASE_PRIMARY,
+      env.COLLECTION_USER,
+      user_id,
+      {
+        employee_role: employee_role,
+      }
+    );
+  } catch (error) {
+    console.log(`ERROR : (userServices.ts => updateStudentInfo) :: ${error}`);
+    throw error;
+  }
+};
+
+export const deleteAccount = async (param: {
+  user_id: string;
+  password: string;
+}) => {
+  try {
+    const result = await _executeFunction(
+      env.FUNCTION_ACCOUNT,
+      "deleteUserAccount",
+      param
+    );
+
+    if (result.responseStatusCode != 200) {
+      throw Error("a");
+    }
+  } catch (error) {
+    if (error == "Error: a") {
+      throw Error("Incorrect password.");
+    } else {
+      console.log("user.deleteAccount : ", error);
+    }
   }
 };

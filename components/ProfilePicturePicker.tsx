@@ -11,7 +11,7 @@ import WebView from "react-native-webview";
 import Button from "./Button";
 import color from "@/constants/color";
 import { getImagePreview } from "@/services/common";
-import { User } from "@/services/types/model";
+import { UserInfo } from "@/services/types/model";
 import { generateAvatar } from "@/services/appwrite";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
@@ -19,7 +19,7 @@ import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 
 interface ProfilePicturePickerType {
   containerStyle?: string;
-  userInfo: User;
+  userInfo: UserInfo;
   imageStyle?: string;
   setNewProfilePicture: (image: ImagePickerAsset | undefined) => void;
   newProfilePicture: ImagePickerAsset | undefined;
@@ -88,10 +88,10 @@ const ProfilePicturePicker = forwardRef(
         <TouchableOpacity
           onPress={() => setIsImagePreviewVisible(true)}
           onLongPress={pickImagehandle}
-          className={`border rounded-md bg-primary shadow-md shadow-black items-center justify-center ${containerStyle}`}
+          className={`border-8 border-primary rounded-full w-40 h-40 bg-primary shadow-md shadow-black items-center justify-center ${containerStyle}`}
         >
           <Image
-            className={`w-3/4 h-3/4 bg-black rounded-full ${imageStyle}`}
+            className={`w-full h-full bg-black rounded-full ${imageStyle}`}
             source={{ uri: imageSource }}
           />
           <View className="absolute -top-2 -right-2 gap-2">

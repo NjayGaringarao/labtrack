@@ -48,9 +48,9 @@ export const updatePassword = async (
   } catch (error) {
     console.log(`appwrite._updatePassword : ${error}`);
     if (
-      error ===
+      error ==
         "AppwriteException: Invalid `oldPassword` param: Password must be between 8 and 256 characters long." ||
-      error ===
+      error ==
         "AppwriteException: Invalid credentials. Please check the email and password."
     ) {
       throw Error("Incorrect old password.");
