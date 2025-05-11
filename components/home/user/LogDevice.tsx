@@ -1,34 +1,33 @@
 import { View, Text, TouchableOpacity } from "react-native";
 import React, { useEffect, useState } from "react";
 import ModalFace from "./ModalFace";
+import ModalDevices from "./ModalDevices";
 
 const LogDevice = () => {
-  const [deviceType, setDeviceType] = useState("");
+  const [room, setRoom] = useState<"HYBRID" | "COMLAB">();
   const [isFaceModal, setIsFaceModal] = useState(false);
   const [isDeviceModal, setIsDeviceModal] = useState(false);
 
-  const handleOnSuccess = async () => {
+  const handleOnFaceSuccess = async () => {
     setIsFaceModal(false);
     setIsDeviceModal(true);
-    setDeviceType("");
   };
 
-  const handleCloseModalFace = () => {
+  const handleCloseModal = () => {
     setIsFaceModal(false);
-    setDeviceType("");
+    setIsDeviceModal(false);
+    setRoom(undefined);
   };
 
   useEffect(() => {
-    if (deviceType !== "") setIsFaceModal(true);
-  }, [deviceType]);
+    if (room) setIsFaceModal(true);
+  }, [room]);
 
   return (
     <View className="flex-1 gap-4">
-      <Text className="text-2xl font-medium">
-        Choose Device Type to Utilize:
-      </Text>
+      <Text className="text-2xl font-medium">Select Location:</Text>
       <TouchableOpacity
-        onPress={() => setDeviceType("LAPTOP")}
+        onPress={() => setRoom("HYBRID")}
         className="flex-1 bg-primary rounded-xl flex-row p-2 gap-2"
       >
         <View className="flex-1 bg-white rounded-lg items-center justify-center">
@@ -39,7 +38,7 @@ const LogDevice = () => {
         </View>
       </TouchableOpacity>
       <TouchableOpacity
-        onPress={() => setDeviceType("SYSTEM UNIT")}
+        onPress={() => setRoom("COMLAB")}
         className="flex-1 bg-primary rounded-xl flex-row p-2 gap-2"
       >
         <View className="w-32 items-center justify-center">
@@ -55,8 +54,16 @@ const LogDevice = () => {
 
       {isFaceModal && (
         <ModalFace
-          onRequestClose={handleCloseModalFace}
-          onSuccess={handleOnSuccess}
+          onRequestClose={handleCloseModal}
+          onSuccess={handleOnFaceSuccess}
+        />
+      )}
+
+      {isDeviceModal && (
+        <ModalDevices
+          onRequestClose={handleCloseModal}
+          onSuccess={handleOnFaceSuccess}
+          room={room}
         />
       )}
     </View>

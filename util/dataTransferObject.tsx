@@ -10,6 +10,16 @@ export const toDevice = (document: Models.Document): Device => {
   };
 };
 
+export const toDeviceList = (documents: Models.Document[]): Device[] => {
+  const devices: Device[] = [];
+
+  documents.forEach((document) => {
+    devices.push(toDevice(document));
+  });
+
+  return devices;
+};
+
 export const toUserInfo = (document: Models.Document): UserInfo => {
   return {
     id: document.$id,
@@ -43,9 +53,9 @@ export const toLogList = (documents: Models.Document[]): Log[] => {
 export const toLog = (document: Models.Document): Log => {
   return {
     id: document.$id,
-    log_time: document.log_time,
     device: toDevice(document.device),
     user: toUserInfo(document.user_info),
-    log_type: document.log_type,
+    start: document.start,
+    end: document.end,
   };
 };

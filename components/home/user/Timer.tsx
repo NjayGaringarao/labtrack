@@ -1,24 +1,24 @@
-import { View, Text } from "react-native";
+import { View, Text, Alert } from "react-native";
 import React from "react";
 import { UserInfo } from "@/services/types/model";
 import { useEffect, useState } from "react";
 import { FontAwesome6 } from "@expo/vector-icons";
 import Button from "@/components/Button";
 import { confirmAction } from "@/util/common";
+import Toast from "react-native-toast-message";
+import { deleteSession } from "@/services/logging";
+import { useGlobalContext } from "@/context/GlobalProvider";
 
-interface ITimer {
-  userInfo: UserInfo;
-}
-const Timer = ({ userInfo }: ITimer) => {
+const Timer = () => {
+  const { userInfo, refreshUserRecord } = useGlobalContext();
   const [elapsedTime, setElapsedTime] = useState(0);
-
+  const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
     if (!userInfo.device_session) return;
     const startTime = new Date(userInfo.device_session.created_at).getTime();
     const interval = setInterval(() => {
       const currentTime = new Date().getTime();
-      const offsetTime = currentTime + 8 * 60 * 60 * 1000;
-      setElapsedTime(Math.floor((offsetTime - startTime) / 1000));
+      setElapsedTime(Math.floor((currentTime - startTime) / 1000));
     }, 1000);
 
     return () => clearInterval(interval);
@@ -41,8 +41,23 @@ const Timer = ({ userInfo }: ITimer) => {
           "This device will be available to others upon logout. Do you want to continue?"
         ))
       ) {
+        return;
       }
-    } catch (error) {}
+
+      await deleteSession(userInfo.id, userInfo.device_session?.device?.id!);
+      await refreshUserRecord({ info: true });
+      Alert.alert(
+        "Logout Successful",
+        "Please vacant the device immediately to allow others to use it."
+      );
+    } catch (error) {
+      Toast.show({
+        type: "error",
+        text1: "Failed to Logout",
+        text2: `There was an error Logging you out from the device.`,
+        visibilityTime: 5000,
+      });
+    }
   };
 
   return (
@@ -53,7 +68,7 @@ const Timer = ({ userInfo }: ITimer) => {
           <View className="flex-row items-center gap-2">
             <FontAwesome6
               name={
-                userInfo.device_session?.device.location === "HYBRID"
+                userInfo.device_session?.device?.location === "HYBRID"
                   ? "laptop"
                   : "computer"
               }
@@ -64,7 +79,11 @@ const Timer = ({ userInfo }: ITimer) => {
               {userInfo.device_session?.device?.alias}
             </Text>
           </View>
-          <Button containerStyles="bg-pirmary" handlePress={handleLogout}>
+          <Button
+            containerStyles="bg-pirmary"
+            handlePress={handleLogout}
+            isDisabled={isLoading}
+          >
             <FontAwesome6 name="power-off" size={24} color="white" />
           </Button>
         </View>

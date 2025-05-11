@@ -23,15 +23,15 @@ export type UserInfo = {
 
 export type Session = {
   id: string;
-  user: UserInfo;
-  device: Device;
+  user?: UserInfo | null;
+  device?: Device | null;
   created_at: Date;
 };
 
 export type Log = {
   id: string;
-  log_time: Date;
   device: Device;
   user: User;
-  log_type: string;
+  start: Date;
+  end: Date;
 };
