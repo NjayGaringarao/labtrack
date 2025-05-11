@@ -51,7 +51,7 @@ const DeleteAccount = () => {
     <View className="w-full">
       <View className=" w-full px-4 py-4 rounded-xl bg-background shadow-lg shadow-black">
         <Text className="text-xl text-failed font-black my-2">
-          V. DELETE ACCOUNT
+          IV. DELETE ACCOUNT
         </Text>
         <View className="w-full px-4 mx-2 gap-2">
           <Text

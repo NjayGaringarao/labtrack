@@ -112,7 +112,7 @@ const LoginCredentials = () => {
     <View className="w-full">
       <View className=" w-full px-4 py-4 rounded-xl bg-background shadow-lg shadow-black">
         <Text className="text-xl text-uBlack font-black my-2">
-          IV. LOGIN CREDENTIALS
+          III. LOGIN CREDENTIALS
         </Text>
 
         <View className="w-full px-4 mx-2 gap-2">

@@ -99,36 +99,33 @@ const Role = () => {
   return (
     <View className="w-full">
       <View className=" w-full px-4 py-4 rounded-xl bg-background shadow-lg shadow-black">
-        {user?.labels[0] === "ADMIN" ||
-          (user?.labels[0] === "EMPLOYEE" && (
-            <>
-              <Text className="text-xl text-uBlack font-black my-2">
-                III. EMPLOYEE INFORMATION
-              </Text>
+        {(user?.labels[0] === "ADMIN" || user?.labels[0] === "EMPLOYEE") && (
+          <>
+            <Text className="text-xl text-uBlack font-black my-2">
+              II. EMPLOYEE INFORMATION
+            </Text>
 
-              <View className="w-full px-4 mx-2 gap-2">
-                <Text className="text-base text-uBlack font-semibold">
-                  Role
-                </Text>
-                <ItemPicker
-                  value={adminForm?.employee_role!}
-                  onChange={(value) =>
-                    setAdminForm({ ...adminForm, employee_role: value })
-                  }
-                >
-                  <Picker.Item label="Teaching Staff" value="TEACHING-STAFF" />
-                  <Picker.Item
-                    label="Non-Teaching Staff"
-                    value="NON-TEACHING-STAFF"
-                  />
-                </ItemPicker>
-              </View>
-            </>
-          ))}
+            <View className="w-full px-4 mx-2 gap-2">
+              <Text className="text-base text-uBlack font-semibold">Role</Text>
+              <ItemPicker
+                value={adminForm?.employee_role!}
+                onChange={(value) =>
+                  setAdminForm({ ...adminForm, employee_role: value })
+                }
+              >
+                <Picker.Item label="Teaching Staff" value="TEACHING-STAFF" />
+                <Picker.Item
+                  label="Non-Teaching Staff"
+                  value="NON-TEACHING-STAFF"
+                />
+              </ItemPicker>
+            </View>
+          </>
+        )}
         {user?.labels[0] === "STUDENT" && (
           <>
             <Text className="text-xl text-uBlack font-black my-2">
-              III. STUDENT INFORMATION
+              II. STUDENT INFORMATION
             </Text>
             <View className="w-full px-4 mx-2 gap-2">
               <Text className="text-base text-uGray font-semibold -mb-1">
