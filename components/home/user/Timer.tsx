@@ -1,6 +1,6 @@
 import { View, Text, Alert } from "react-native";
 import React from "react";
-import { UserInfo } from "@/services/types/model";
+import { Session, UserInfo } from "@/services/types/model";
 import { useEffect, useState } from "react";
 import { FontAwesome6 } from "@expo/vector-icons";
 import Button from "@/components/Button";
@@ -8,11 +8,14 @@ import { confirmAction } from "@/util/common";
 import Toast from "react-native-toast-message";
 import { deleteSession } from "@/services/logging";
 import { useGlobalContext } from "@/context/GlobalProvider";
+import { getDeviceSession } from "@/services/session";
 
 const Timer = () => {
   const { userInfo, refreshUserRecord } = useGlobalContext();
   const [elapsedTime, setElapsedTime] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
+  const [session, setSession] = useState<Session>();
+
   useEffect(() => {
     if (!userInfo.device_session) return;
     const startTime = new Date(userInfo.device_session.created_at).getTime();
@@ -33,6 +36,19 @@ const Timer = () => {
       .padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
   };
 
+  const querySession = async () => {
+    try {
+      setSession(await getDeviceSession(userInfo.id));
+    } catch (error) {
+      Toast.show({
+        type: "error",
+        text1: "Failed to Load",
+        text2: `There was an error Querying Session`,
+        visibilityTime: 5000,
+      });
+    }
+  };
+
   const handleLogout = async () => {
     try {
       if (
@@ -44,6 +60,7 @@ const Timer = () => {
         return;
       }
 
+      setIsLoading(true);
       await deleteSession(userInfo.id, userInfo.device_session?.device?.id!);
       await refreshUserRecord({ info: true });
       Alert.alert(
@@ -58,8 +75,14 @@ const Timer = () => {
         text2: `There was an error Logging you out from the device.`,
         visibilityTime: 5000,
       });
+    } finally {
+      setIsLoading(false);
     }
   };
+
+  useEffect(() => {
+    querySession();
+  }, [userInfo]);
 
   return (
     <View className="flex-1 gap-4">
@@ -69,15 +92,13 @@ const Timer = () => {
           <View className="flex-row items-center gap-2">
             <FontAwesome6
               name={
-                userInfo.device_session?.device?.location === "HYBRID"
-                  ? "laptop"
-                  : "computer"
+                session?.device?.location === "HYBRID" ? "laptop" : "computer"
               }
               size={48}
               color="white"
             />
             <Text className="text-3xl text-white">
-              {userInfo.device_session?.device?.alias}
+              {session?.device?.alias}
             </Text>
           </View>
           <Button
