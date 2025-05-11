@@ -32,6 +32,9 @@ export default function RootLayout() {
           <Stack.Screen name="(auth)" options={{ headerShown: false }} />
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
           <Stack.Screen name="userSettings" options={{ headerShown: false }} />
+          <Stack.Screen name="manageSession" options={{ headerShown: false }} />
+          <Stack.Screen name="manageDevice" options={{ headerShown: false }} />
+          <Stack.Screen name="viewLogs" options={{ headerShown: false }} />
         </Stack>
       </GlobalProvider>
       <Toast config={customToastConfig} />

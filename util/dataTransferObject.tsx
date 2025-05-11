@@ -1,4 +1,10 @@
-import { Credentials, Device, Log, UserInfo } from "@/services/types/model";
+import {
+  Credentials,
+  Device,
+  Log,
+  Session,
+  UserInfo,
+} from "@/services/types/model";
 import { Models } from "react-native-appwrite";
 
 export const toDevice = (document: Models.Document): Device => {
@@ -58,4 +64,23 @@ export const toLog = (document: Models.Document): Log => {
     start: document.start,
     end: document.end,
   };
+};
+
+export const toSession = (document: Models.Document): Session => {
+  return {
+    id: document.$id,
+    created_at: document.created_at,
+    user: document.user,
+    device: document.device,
+  };
+};
+
+export const toSessionList = (documents: Models.Document[]): Session[] => {
+  const sessionList: Session[] = [];
+
+  documents.forEach((document) => {
+    sessionList.push(toSession(document));
+  });
+
+  return sessionList;
 };

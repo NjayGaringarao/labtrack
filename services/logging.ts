@@ -9,6 +9,7 @@ export const createSession = async (user_id: string, device_id: string) => {
     });
   } catch (error) {
     console.log("logging.createSession : ", error);
+    throw error;
   }
 };
 
@@ -20,5 +21,6 @@ export const deleteSession = async (user_id: string, device_id: string) => {
     });
   } catch (error) {
     console.log("logging.createSession : ", error);
+    throw error;
   }
 };
