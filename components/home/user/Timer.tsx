@@ -51,6 +51,7 @@ const Timer = () => {
         "Please vacant the device immediately to allow others to use it."
       );
     } catch (error) {
+      await refreshUserRecord({ info: true });
       Toast.show({
         type: "error",
         text1: "Failed to Logout",
