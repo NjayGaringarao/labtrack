@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import ModalFace from "./ModalFace";
 import ModalDevices from "./ModalDevices";
 import image from "@/constants/image";
+import { FontAwesome6 } from "@expo/vector-icons";
 
 const LogDevice = () => {
   const [room, setRoom] = useState<"HYBRID" | "COMLAB">();
@@ -42,6 +43,7 @@ const LogDevice = () => {
           </Text>
         </View>
         <View className="w-32 items-center justify-center">
+          <FontAwesome6 name="laptop" size={42} color="white" />
           <Text className="text-xl font-normal text-white">Laptop</Text>
         </View>
       </TouchableOpacity>
@@ -50,6 +52,7 @@ const LogDevice = () => {
         className="flex-1 bg-primary rounded-xl flex-row p-2 gap-2"
       >
         <View className="w-32 items-center justify-center">
+          <FontAwesome6 name="computer" size={42} color="white" />
           <Text className="text-xl font-normal text-white">Desktop Unit</Text>
         </View>
         <View className="flex-1 bg-white rounded-lg items-center justify-center overflow-hidden">
@@ -58,6 +61,7 @@ const LogDevice = () => {
             resizeMode="contain"
             className="absolute w-full opacity-15"
           />
+
           <Text className="text-primary font-semibold text-2xl text-center">
             COMPUTER LABORATORY
           </Text>

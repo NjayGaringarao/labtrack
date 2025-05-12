@@ -135,62 +135,6 @@ const profile = () => {
             </View>
           </View>
 
-          {/* Account Information */}
-          <View className="w-full mb-6">
-            <Text className="text-lg font-semibold text-primary mb-2">
-              Account Information
-            </Text>
-
-            <View className="flex-row items-center mt-2">
-              <Text className="w-1/2 pl-2 text-uBlack font-medium">
-                Account Type
-              </Text>
-              <Text className="flex-1 text-uBlack font-light">
-                {user?.labels[0]} ACCOUNT
-              </Text>
-            </View>
-
-            <View className="flex-row items-center mt-2">
-              <Text className="w-1/2 pl-2 text-uBlack font-medium">
-                Log into Device
-              </Text>
-              <Text className="flex-1 text-uBlack font-light">
-                {user?.labels[0] == "ADMIN" ? "FALSE" : "TRUE"}
-              </Text>
-            </View>
-
-            <View className="flex-row items-center mt-2">
-              <Text className="w-1/2 pl-2 text-uBlack font-medium">
-                Edit Profile
-              </Text>
-              <Text className="flex-1 text-uBlack font-light">TRUE</Text>
-            </View>
-            <View className="flex-row items-center mt-2">
-              <Text className="w-1/2 pl-2 text-uBlack font-medium">
-                Manage Devices
-              </Text>
-              <Text className="flex-1 text-uBlack font-light">
-                {user?.labels[0] === "ADMIN" ? "TRUE" : "FALSE"}
-              </Text>
-            </View>
-            <View className="flex-row items-center mt-2">
-              <Text className="w-1/2 pl-2 text-uBlack font-medium">
-                View Activity
-              </Text>
-              <Text className="flex-1 text-uBlack font-light">
-                {user?.labels[0] === "ADMIN" ? "TRUE" : "FALSE"}
-              </Text>
-            </View>
-            <View className="flex-row items-center mt-2">
-              <Text className="w-1/2 pl-2 text-uBlack font-medium">
-                View Logs
-              </Text>
-              <Text className="flex-1 text-uBlack font-light">
-                {user?.labels[0] === "ADMIN" ? "TRUE" : "FALSE"}
-              </Text>
-            </View>
-          </View>
-
           {/* Student Information */}
           {userInfo.dep_prog && userInfo.year_level && (
             <View className="w-full border-t border-gray-300 pt-4 mb-6">
@@ -230,6 +174,62 @@ const profile = () => {
               </View>
             </View>
           )}
+
+          {/* Account Information */}
+          <View className="w-full mb-6 border-t border-gray-300">
+            <Text className="text-lg font-semibold text-primary mb-2">
+              Account Information
+            </Text>
+
+            <View className="flex-row items-center mt-2">
+              <Text className="w-1/2 pl-2 text-uBlack font-medium">
+                Account Type
+              </Text>
+              <Text className="flex-1 text-uBlack font-light">
+                {user?.labels[0]} ACCOUNT
+              </Text>
+            </View>
+
+            <View className="flex-row items-center mt-2">
+              <Text className="w-1/2 pl-2 text-uBlack font-medium">
+                Log into Device
+              </Text>
+              <Text className="flex-1 text-uBlack font-light">
+                {user?.labels[0] == "ADMIN" ? "FALSE" : "TRUE"}
+              </Text>
+            </View>
+
+            <View className="flex-row items-center mt-2">
+              <Text className="w-1/2 pl-2 text-uBlack font-medium">
+                Edit User Profile
+              </Text>
+              <Text className="flex-1 text-uBlack font-light">TRUE</Text>
+            </View>
+            <View className="flex-row items-center mt-2">
+              <Text className="w-1/2 pl-2 text-uBlack font-medium">
+                Manage Devices
+              </Text>
+              <Text className="flex-1 text-uBlack font-light">
+                {user?.labels[0] === "ADMIN" ? "TRUE" : "FALSE"}
+              </Text>
+            </View>
+            <View className="flex-row items-center mt-2">
+              <Text className="w-1/2 pl-2 text-uBlack font-medium">
+                Manage Sessions
+              </Text>
+              <Text className="flex-1 text-uBlack font-light">
+                {user?.labels[0] === "ADMIN" ? "TRUE" : "FALSE"}
+              </Text>
+            </View>
+            <View className="flex-row items-center mt-2">
+              <Text className="w-1/2 pl-2 text-uBlack font-medium">
+                View Logs
+              </Text>
+              <Text className="flex-1 text-uBlack font-light">
+                {user?.labels[0] === "ADMIN" ? "TRUE" : "FALSE"}
+              </Text>
+            </View>
+          </View>
         </ScrollView>
       </View>
     </View>

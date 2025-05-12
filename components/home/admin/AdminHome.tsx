@@ -47,7 +47,7 @@ const AdminHome = () => {
           }}
           className="flex-1 bg-primary rounded-xl flex-row p-2 gap-2"
         >
-          <View className="flex-1 bg-white rounded-lg items-center justify-center">
+          <View className="flex-1 bg-gray-50 rounded-lg items-center justify-center">
             <Text className="text-primary font-semibold text-2xl">SESSION</Text>
           </View>
           <View className="w-32 items-center justify-center">
@@ -56,6 +56,8 @@ const AdminHome = () => {
             </Text>
           </View>
         </TouchableOpacity>
+
+        {/** Manage Devices */}
         <TouchableOpacity
           onPress={() => {
             router.push("/manageDevice");
@@ -67,17 +69,19 @@ const AdminHome = () => {
               Manage Devices
             </Text>
           </View>
-          <View className="flex-1 bg-white rounded-lg items-center justify-center">
+          <View className="flex-1 bg-gray-50 rounded-lg items-center justify-center">
             <Text className="text-primary font-semibold text-2xl">DEVICE</Text>
           </View>
         </TouchableOpacity>
+
+        {/** View Logs */}
         <TouchableOpacity
           onPress={() => {
             router.push("/viewLogs");
           }}
           className="flex-1 bg-primary rounded-xl flex-row p-2 gap-2"
         >
-          <View className="flex-1 bg-white rounded-lg items-center justify-center">
+          <View className="flex-1 bg-gray-50 rounded-lg items-center justify-center">
             <Text className="text-primary font-semibold text-2xl">LOGS</Text>
           </View>
           <View className="w-32 items-center justify-center">
