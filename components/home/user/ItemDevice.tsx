@@ -66,8 +66,9 @@ const ItemDevice = ({
     <TouchableOpacity
       className={`p-4 w-[45%] m-2 ${
         device.device_session ? "bg-secondary" : "bg-primary"
-      } rounded-lg`}
+      } rounded-lg ${isLoading ? "opacity-50" : ""}`}
       onPress={handlePress}
+      disabled={isLoading}
     >
       <View className="flex-row items-start justify-between">
         <View>

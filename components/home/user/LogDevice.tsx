@@ -1,7 +1,8 @@
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, Image } from "react-native";
 import React, { useEffect, useState } from "react";
 import ModalFace from "./ModalFace";
 import ModalDevices from "./ModalDevices";
+import image from "@/constants/image";
 
 const LogDevice = () => {
   const [room, setRoom] = useState<"HYBRID" | "COMLAB">();
@@ -30,11 +31,18 @@ const LogDevice = () => {
         onPress={() => setRoom("HYBRID")}
         className="flex-1 bg-primary rounded-xl flex-row p-2 gap-2"
       >
-        <View className="flex-1 bg-white rounded-lg items-center justify-center">
-          <Text className="text-primary font-semibold text-2xl">LAPTOP</Text>
+        <View className="flex-1 bg-white rounded-lg items-center justify-center overflow-hidden">
+          <Image
+            source={image.hybrid}
+            resizeMode="contain"
+            className="absolute w-full opacity-15"
+          />
+          <Text className="text-primary font-semibold text-2xl">
+            HYBRID ROOM
+          </Text>
         </View>
         <View className="w-32 items-center justify-center">
-          <Text className="text-xl font-normal text-white">Hybrid Room</Text>
+          <Text className="text-xl font-normal text-white">Laptop</Text>
         </View>
       </TouchableOpacity>
       <TouchableOpacity
@@ -42,12 +50,16 @@ const LogDevice = () => {
         className="flex-1 bg-primary rounded-xl flex-row p-2 gap-2"
       >
         <View className="w-32 items-center justify-center">
-          <Text className="text-xl font-normal text-white">Computer</Text>
-          <Text className="text-xl font-normal text-white">Laboratory</Text>
+          <Text className="text-xl font-normal text-white">Desktop Unit</Text>
         </View>
-        <View className="flex-1 bg-white rounded-lg items-center justify-center">
-          <Text className="text-primary font-semibold text-2xl">
-            SYSTEM UNIT
+        <View className="flex-1 bg-white rounded-lg items-center justify-center overflow-hidden">
+          <Image
+            source={image.comlab}
+            resizeMode="contain"
+            className="absolute w-full opacity-15"
+          />
+          <Text className="text-primary font-semibold text-2xl text-center">
+            COMPUTER LABORATORY
           </Text>
         </View>
       </TouchableOpacity>
