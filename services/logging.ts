@@ -1,5 +1,7 @@
 import { env } from "@/constants/env";
-import { _executeFunction } from "./appwrite";
+import { _executeFunction, listDocuments } from "./appwrite";
+import { Query } from "react-native-appwrite";
+import { toLogList } from "@/util/dataTransferObject";
 
 export const createSession = async (user_id: string, device_id: string) => {
   try {
@@ -20,6 +22,36 @@ export const deleteSession = async (user_id: string) => {
     });
   } catch (error) {
     console.log("logging.createSession : ", error);
+    throw error;
+  }
+};
+
+export const getDeviceLog = async (device_id: string) => {
+  try {
+    const result = await listDocuments(
+      env.DATABASE_PRIMARY,
+      env.COLLECTION_LOG,
+      [Query.equal("device_id", device_id), Query.orderDesc("$createdAt")]
+    );
+
+    return toLogList(result.documents);
+  } catch (error) {
+    console.log("logging.getDeviceLog : ", error);
+    throw error;
+  }
+};
+
+export const getLogs = async () => {
+  try {
+    const result = await listDocuments(
+      env.DATABASE_PRIMARY,
+      env.COLLECTION_LOG,
+      [Query.orderDesc("$createdAt")]
+    );
+
+    return toLogList(result.documents);
+  } catch (error) {
+    console.log("logging.getLogs : ", error);
     throw error;
   }
 };
