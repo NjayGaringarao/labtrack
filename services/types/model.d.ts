@@ -3,6 +3,7 @@ export type Device = {
   alias: string;
   location: string;
   device_session: Session | null;
+  created_at: Date;
 };
 
 export type Credentials = {

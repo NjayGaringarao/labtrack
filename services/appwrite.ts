@@ -140,6 +140,24 @@ export const getDocument = async (
   }
 };
 
+export const deleteDocument = async (
+  DATABASE_ID: string,
+  COLLECTION_ID: string,
+  document_id: string
+) => {
+  try {
+    const result = await appwriteService.database.deleteDocument(
+      DATABASE_ID,
+      COLLECTION_ID,
+      document_id
+    );
+    return result;
+  } catch (error) {
+    console.log("appwrite.deleteDocument : ", error);
+    throw error;
+  }
+};
+
 export const listDocuments = async (
   DATABASE_ID: string,
   COLLECTION_ID: string,

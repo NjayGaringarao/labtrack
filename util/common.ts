@@ -112,3 +112,12 @@ export const convertToBase64 = async (uri: string) => {
     return undefined;
   }
 };
+
+export const sortByAlias = <T extends { alias: string }>(list: T[]) => {
+  return list.sort((a, b) =>
+    a.alias.localeCompare(b.alias, undefined, {
+      numeric: true,
+      sensitivity: "base",
+    })
+  );
+};

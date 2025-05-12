@@ -13,6 +13,7 @@ export const toDevice = (document: Models.Document): Device => {
     alias: document.alias,
     location: document.location,
     device_session: document.device_session,
+    created_at: new Date(document.$createdAt),
   };
 };
 
