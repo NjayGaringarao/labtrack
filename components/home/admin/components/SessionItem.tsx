@@ -41,7 +41,7 @@ const SessionItem = ({ session, handleRefreshSessionList }: ISessionItem) => {
       }
 
       setIsLoading(true);
-      await deleteSession(session.id, session.device?.id!);
+      await deleteSession(session.id);
       await handleRefreshSessionList();
     } catch (error) {
       Toast.show({

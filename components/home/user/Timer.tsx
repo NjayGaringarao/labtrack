@@ -61,7 +61,7 @@ const Timer = () => {
       }
 
       setIsLoading(true);
-      await deleteSession(userInfo.id, userInfo.device_session?.device?.id!);
+      await deleteSession(userInfo.id);
       await refreshUserRecord({ info: true });
       Alert.alert(
         "Logout Successful",
