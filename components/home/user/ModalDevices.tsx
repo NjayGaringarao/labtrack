@@ -7,6 +7,7 @@ import Toast from "react-native-toast-message";
 import ItemDevice from "./ItemDevice";
 import { FontAwesome } from "@expo/vector-icons";
 import color from "@/constants/color";
+import { sortByAlias } from "@/util/common";
 
 interface IModalDevices {
   onRequestClose: () => void;
@@ -21,7 +22,7 @@ const ModalDevices = ({ onRequestClose, onSuccess, room }: IModalDevices) => {
   const queryDeviceList = async () => {
     try {
       setIsLoading(true);
-      setDeviceList(await getDevices(room));
+      setDeviceList(sortByAlias(await getDevices(room)));
     } catch (error) {
       Toast.show({
         type: "error",
@@ -51,8 +52,8 @@ const ModalDevices = ({ onRequestClose, onSuccess, room }: IModalDevices) => {
           <View className="rounded-t-xl bg-background p-4 min-h-[25rem] max-h-[45rem] gap-4">
             <View className="w-full flex-row justify-between">
               <Text className="text-2xl font-semibold">{`Choose ${
-                room == "HYBRID" ? "Laptop" : "Computer System"
-              } :`}</Text>
+                room == "HYBRID" ? "Laptop" : "Desktop"
+              }`}</Text>
               <View className="flex-row gap-1">
                 <Button handlePress={queryDeviceList}>
                   <FontAwesome name="refresh" size={24} color={color.white} />

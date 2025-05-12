@@ -27,17 +27,17 @@ const UserHome = () => {
     <View className="flex-1 m-4 gap-4">
       <View className="flex-row gap-2 items-center">
         <ProfilePicture userInfo={userInfo} />
-        <View className="gap-0">
+        <View className="flex-1">
           <Text
-            className="text-2xl font-semibold text-uGray"
+            className="text-xl font-semibold text-uGray"
             adjustsFontSizeToFit
             numberOfLines={1}
           >
-            {`${userInfo.name[0].toUpperCase()} ${userInfo.name[2].toUpperCase()} `}
+            {`${userInfo.name[0]} ${userInfo.name[2]} `}
           </Text>
           <Text className="text-sm font-medium">{userInfo.id}</Text>
         </View>
-        <View className="flex-1 items-end">
+        <View className="items-end">
           <Button handlePress={refreshHandle}>
             <FontAwesome name="refresh" size={24} color="white" />
           </Button>

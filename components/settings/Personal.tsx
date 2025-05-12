@@ -132,9 +132,7 @@ const Personal = () => {
               title="Last Name"
               textValue={form.lastName!}
               placeholder="Enter your last name"
-              handleChangeText={(e) =>
-                setForm({ ...form, lastName: e.toLocaleUpperCase() })
-              }
+              handleChangeText={(e) => setForm({ ...form, lastName: e })}
               containerStyles="w-full "
               titleTextStyles="text-uGray text-base font-semibold"
               textInputStyles="text-base text-uBlack"
@@ -144,9 +142,7 @@ const Personal = () => {
               title="First Name"
               textValue={form.firstName!}
               placeholder="Enter your first name"
-              handleChangeText={(e) =>
-                setForm({ ...form, firstName: e.toLocaleUpperCase() })
-              }
+              handleChangeText={(e) => setForm({ ...form, firstName: e })}
               containerStyles="w-full "
               titleTextStyles="text-uGray text-base font-semibold"
               textInputStyles="text-base text-uBlack"
@@ -156,9 +152,7 @@ const Personal = () => {
               title="Middle Name"
               textValue={form.middleName!}
               placeholder="Enter your middle name"
-              handleChangeText={(e) =>
-                setForm({ ...form, middleName: e.toLocaleUpperCase() })
-              }
+              handleChangeText={(e) => setForm({ ...form, middleName: e })}
               containerStyles="w-full "
               titleTextStyles="text-uGray text-base font-semibold"
               textInputStyles="text-base text-uBlack"

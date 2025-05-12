@@ -49,7 +49,7 @@ const ProfilePicture = ({
     <>
       <TouchableOpacity
         onPress={onPressHandle}
-        className={`border-4 border-primary rounded-full bg-primary shadow-md shadow-black items-center justify-center w-20 h-20 ${containerStyle}`}
+        className={`border-4 border-primary rounded-full bg-primary shadow-md shadow-black items-center justify-center w-16 h-16 ${containerStyle}`}
       >
         <Image
           className={`w-full h-full bg-black rounded-full ${imageStyle}`}
