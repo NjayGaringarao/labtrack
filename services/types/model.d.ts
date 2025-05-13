@@ -1,3 +1,5 @@
+import { Landmarks } from "react-native-vision-camera-face-detector";
+
 export type Device = {
   id: string;
   alias: string;
@@ -17,7 +19,7 @@ export type UserInfo = {
   picture_id?: string;
   dep_prog?: string;
   year_level?: string;
-  face_descriptor?: string;
+  face_descriptor?: Landmarks;
   employee_role?: string;
   device_session: Session | null;
 };

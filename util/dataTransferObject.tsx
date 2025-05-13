@@ -35,7 +35,7 @@ export const toUserInfo = (document: Models.Document): UserInfo => {
     dep_prog: document.dep_prog,
     year_level: document.year_level,
     employee_role: document.employee_role,
-    face_descriptor: document.face_descriptor,
+    face_descriptor: JSON.parse(document.face_descriptor),
     device_session: document.device_session,
   };
 };
