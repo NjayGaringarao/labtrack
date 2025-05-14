@@ -57,6 +57,7 @@ export const signUp = async ({
           employee_role: employee_role,
           email: email,
           password: password,
+          face_descriptor,
         }
       );
       if (result.responseStatusCode !== 200) throw Error("a");
