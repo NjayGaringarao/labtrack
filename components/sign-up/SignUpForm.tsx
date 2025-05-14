@@ -16,6 +16,7 @@ import { isEmailExisting, isUserIdExisting } from "@/services/credentials";
 import { signUp } from "@/services/auth";
 import { signInUser } from "@/services/appwrite";
 import { useGlobalContext } from "@/context/GlobalProvider";
+import { Landmarks } from "react-native-vision-camera-face-detector";
 
 const SignUpForm = () => {
   const { initializeGlobalState } = useGlobalContext();
@@ -25,7 +26,7 @@ const SignUpForm = () => {
   const [employeeRole, setEmployeeRole] = useState("TEACHING-STAFF");
 
   const [nameForm, setNameForm] = useState({ first: "", middle: "", last: "" });
-  const [faceDescriptor, setFaceDescriptor] = useState<string | undefined>();
+  const [faceDescriptor, setFaceDescriptor] = useState<Landmarks | undefined>();
   const [studentForm, setStudentForm] = useState({
     dep_prog: "CCIT-BSCS",
     year_level: "FIRST",
@@ -114,7 +115,7 @@ const SignUpForm = () => {
         employee_role: employeeRole,
         year_level: studentForm.year_level,
         dep_prog: studentForm.dep_prog,
-        face_descriptor: faceDescriptor,
+        face_descriptor: JSON.stringify(faceDescriptor),
       });
       Toast.show({
         type: "success",
@@ -192,7 +193,14 @@ const SignUpForm = () => {
           />
         );
       case 4:
-        return <FaceRegistrationForm onNext={nextStep} onBack={prevStep} />;
+        return (
+          <FaceRegistrationForm
+            onNext={nextStep}
+            onBack={prevStep}
+            setFaceDescriptor={setFaceDescriptor}
+            faceDescriptor={faceDescriptor}
+          />
+        );
       case 5:
         return (
           <SummaryForm

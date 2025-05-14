@@ -59,6 +59,7 @@ const SummaryForm = ({
           }
           containerStyles="flex-1"
           isDisabled={isSubmitting}
+          isSecondary
         />
 
         <Button

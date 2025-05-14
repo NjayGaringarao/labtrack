@@ -8,6 +8,7 @@ interface ButtonProps {
   textStyles?: string;
   isDisabled?: boolean;
   children?: ReactNode;
+  isSecondary?: boolean;
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -16,11 +17,14 @@ const Button: React.FC<ButtonProps> = ({
   containerStyles,
   textStyles,
   isDisabled = false,
+  isSecondary = false,
   children,
 }) => {
   return (
     <View
-      className={`h-10 bg-uBlack rounded-lg overflow-hidden px-4 ${containerStyles} ${
+      className={`${
+        isSecondary ? "bg-background border border-uBlack" : "bg-uBlack "
+      } h-10 rounded-lg overflow-hidden px-4 ${containerStyles} ${
         isDisabled ? "opacity-50" : "opacity-100"
       }`}
     >
@@ -32,7 +36,9 @@ const Button: React.FC<ButtonProps> = ({
       >
         {children}
         <Text
-          className={`text-white text-center font-semibold text-lg ${textStyles} ${
+          className={`${
+            isSecondary ? "text-uBlack" : "text-white"
+          } text-center font-semibold text-lg ${textStyles} ${
             title ? "visible" : "hidden"
           }`}
         >

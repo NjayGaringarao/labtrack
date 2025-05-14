@@ -76,6 +76,7 @@ const CredentialForm = ({
         title="Back"
         handlePress={() => onBack()}
         containerStyles="flex-1"
+        isSecondary
       />
 
       <Button

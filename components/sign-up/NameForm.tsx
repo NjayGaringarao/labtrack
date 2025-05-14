@@ -39,6 +39,7 @@ const NameForm = ({ nameForm, setNameForm, onBack, onNext }: INameForm) => (
         title="Back"
         handlePress={() => onBack()}
         containerStyles="flex-1"
+        isSecondary
       />
 
       <Button
