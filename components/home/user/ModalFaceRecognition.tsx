@@ -27,16 +27,14 @@ const ModalFaceRecognition = ({ onRequestClose, onSuccess }: IModalFace) => {
   const { userInfo } = useGlobalContext();
   const [isRecognitionActive, setIsRecognitionActive] = useState(false);
   const [landmarkBuffer, setLandmarkBuffer] = useState<Landmarks[]>([]);
-  const [attemptCount, setAttemptCount] = useState(0);
 
   const device = RNVC.useCameraDevice("front");
 
-  const DETECTION_INTERVAL_MS = 50;
-  const LANDMARK_BUFFER_SIZE = 10;
-  const MAX_ATTEMPTS = 3;
-
+  const DETECTION_INTERVAL_MS = 200;
+  const LANDMARK_BUFFER_SIZE = 20;
   const lastDetectionTimeRef = useRef(0);
   const isProcessingRef = useRef(false);
+  const hasProcessedRef = useRef(false);
 
   const faceDetectionOptions: FaceDetectionOptions = {
     performanceMode: "fast",
@@ -59,14 +57,14 @@ const ModalFaceRecognition = ({ onRequestClose, onSuccess }: IModalFace) => {
         isProcessingRef.current ||
         now - lastDetectionTimeRef.current < DETECTION_INTERVAL_MS ||
         !normalizedStoredDescriptor ||
+        !faces ||
+        faces.length === 0 ||
         !faces[0]?.landmarks
       ) {
         return;
       }
 
       const newLandmarks = faces[0].landmarks;
-
-      // Check if all required landmarks are present before adding
 
       const isValid = REQUIRED_FACE_LANDMARK_KEYS.every(
         (key) =>
@@ -75,16 +73,14 @@ const ModalFaceRecognition = ({ onRequestClose, onSuccess }: IModalFace) => {
           typeof newLandmarks[key].y === "number"
       );
 
-      if (!isValid) {
-        return; // Skip this frame — incomplete landmark data
-      }
+      if (!isValid) return;
 
       lastDetectionTimeRef.current = now;
       isProcessingRef.current = true;
 
       setLandmarkBuffer((prev) => {
         const updated = [...prev, newLandmarks];
-        return updated.slice(-LANDMARK_BUFFER_SIZE); // keep buffer trimmed
+        return updated.slice(-LANDMARK_BUFFER_SIZE);
       });
 
       setTimeout(() => {
@@ -98,35 +94,39 @@ const ModalFaceRecognition = ({ onRequestClose, onSuccess }: IModalFace) => {
     if (
       isRecognitionActive &&
       landmarkBuffer.length >= LANDMARK_BUFFER_SIZE &&
-      normalizedStoredDescriptor
+      normalizedStoredDescriptor &&
+      !hasProcessedRef.current
     ) {
-      const success = authenticateFace(
-        normalizedStoredDescriptor,
-        landmarkBuffer
-      );
+      hasProcessedRef.current = true;
 
-      if (success) {
-        console.log("✅ Face authenticated!");
+      try {
+        const success = authenticateFace(
+          normalizedStoredDescriptor,
+          landmarkBuffer
+        );
+
         setIsRecognitionActive(false);
-        setLandmarkBuffer([]);
-        onSuccess();
-      } else {
-        setAttemptCount((prev) => prev + 1);
 
-        if (attemptCount + 1 >= MAX_ATTEMPTS) {
-          setIsRecognitionActive(false);
+        if (success) {
+          console.log("✅ Face authenticated!");
+          setLandmarkBuffer([]);
+          onSuccess();
+        } else {
           onRequestClose();
           setTimeout(() => {
             Alert.alert(
-              "Face Authentication Failed",
-              "Please try again later."
+              "Not Recognized",
+              "Please try again with recommended setup."
             );
           }, 300);
-        } else {
-          setTimeout(() => {
-            setLandmarkBuffer([]);
-          }, 100);
         }
+      } catch (error) {
+        console.error("Authentication crash:", error);
+        Alert.alert(
+          "Error",
+          "Something went wrong during face authentication."
+        );
+        setIsRecognitionActive(false);
       }
     }
   }, [landmarkBuffer]);
@@ -179,12 +179,22 @@ const ModalFaceRecognition = ({ onRequestClose, onSuccess }: IModalFace) => {
                   <FaceGuideOverlay />
                 </View>
                 {isRecognitionActive ? (
-                  <View className="w-full h-16">
-                    <Loading
-                      loadingPrompt="Keep your face steady."
-                      indicatorSize="small"
+                  <>
+                    <View className="w-full h-16">
+                      <Loading
+                        loadingPrompt="Keep your face steady."
+                        indicatorSize="small"
+                      />
+                    </View>
+                    <View
+                      className="bg-primary h-6"
+                      style={{
+                        width: `${
+                          (landmarkBuffer.length / LANDMARK_BUFFER_SIZE) * 100
+                        }%`,
+                      }}
                     />
-                  </View>
+                  </>
                 ) : (
                   <FaceCameraTip
                     title="Face Recognition Tips:"
@@ -197,6 +207,7 @@ const ModalFaceRecognition = ({ onRequestClose, onSuccess }: IModalFace) => {
                   handlePress={() => {
                     setLandmarkBuffer([]);
                     setIsRecognitionActive((prev) => !prev);
+                    hasProcessedRef.current = false;
                   }}
                 />
               </View>
