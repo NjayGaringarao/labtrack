@@ -17,6 +17,7 @@ import { signUp } from "@/services/auth";
 import { signInUser } from "@/services/appwrite";
 import { useGlobalContext } from "@/context/GlobalProvider";
 import { Landmarks } from "react-native-vision-camera-face-detector";
+import { serializeLandmarks } from "@/lib/face";
 
 const SignUpForm = () => {
   const { initializeGlobalState } = useGlobalContext();
@@ -26,7 +27,7 @@ const SignUpForm = () => {
   const [employeeRole, setEmployeeRole] = useState("TEACHING-STAFF");
 
   const [nameForm, setNameForm] = useState({ first: "", middle: "", last: "" });
-  const [faceDescriptor, setFaceDescriptor] = useState<Landmarks | undefined>();
+  const [faceDescriptor, setFaceDescriptor] = useState<Landmarks>();
   const [studentForm, setStudentForm] = useState({
     dep_prog: "CCIT-BSCS",
     year_level: "FIRST",
@@ -115,8 +116,11 @@ const SignUpForm = () => {
         employee_role: employeeRole,
         year_level: studentForm.year_level,
         dep_prog: studentForm.dep_prog,
-        face_descriptor: JSON.stringify(faceDescriptor),
+        face_descriptor: faceDescriptor
+          ? serializeLandmarks(faceDescriptor)
+          : undefined,
       });
+
       Toast.show({
         type: "success",
         text1: "Success",

@@ -145,14 +145,16 @@ const FaceRegistrationForm = ({
         />
 
         {!faceDescriptor ? (
-          <Button
-            title={isDetectionActive ? "Stop" : "Scan"}
-            handlePress={() => {
-              setIsDetectionActive((prev) => !prev);
-              setFaceDescriptor(undefined);
-            }}
-            containerStyles="flex-1"
-          />
+          RNVC.Camera.getCameraPermissionStatus() === "granted" && (
+            <Button
+              title={isDetectionActive ? "Stop" : "Scan"}
+              handlePress={() => {
+                setIsDetectionActive((prev) => !prev);
+                setFaceDescriptor(undefined);
+              }}
+              containerStyles="flex-1"
+            />
+          )
         ) : (
           <>
             <Button

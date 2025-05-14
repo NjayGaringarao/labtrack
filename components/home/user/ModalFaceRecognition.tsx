@@ -8,9 +8,15 @@ import {
   FaceDetectionOptions,
   Landmarks,
 } from "react-native-vision-camera-face-detector";
-import { authenticateFace, extractDescriptorFromLandmarks } from "@/lib/face";
+import {
+  authenticateFace,
+  extractDescriptorFromLandmarks,
+  REQUIRED_FACE_LANDMARK_KEYS,
+} from "@/lib/face";
 import { useGlobalContext } from "@/context/GlobalProvider";
 import { FaceGuideOverlay } from "@/components/FaceGuideOverlay";
+import Loading from "@/components/Loading";
+import FaceCameraTip from "@/components/sign-up/FaceCameraTip";
 
 interface IModalFace {
   onRequestClose: () => void;
@@ -61,16 +67,8 @@ const ModalFaceRecognition = ({ onRequestClose, onSuccess }: IModalFace) => {
       const newLandmarks = faces[0].landmarks;
 
       // Check if all required landmarks are present before adding
-      const requiredKeys: (keyof Landmarks)[] = [
-        "LEFT_EYE",
-        "RIGHT_EYE",
-        "NOSE_BASE",
-        "MOUTH_LEFT",
-        "MOUTH_RIGHT",
-        "MOUTH_BOTTOM",
-      ];
 
-      const isValid = requiredKeys.every(
+      const isValid = REQUIRED_FACE_LANDMARK_KEYS.every(
         (key) =>
           newLandmarks[key] &&
           typeof newLandmarks[key].x === "number" &&
@@ -133,6 +131,16 @@ const ModalFaceRecognition = ({ onRequestClose, onSuccess }: IModalFace) => {
     }
   }, [landmarkBuffer]);
 
+  const recognitionTips = [
+    "Ensure the camera lens is clean for a clear image.",
+    "Use a well-lit environment to improve detection accuracy.",
+    "Avoid strong backlighting that could create shadows on your face.",
+    "Remove any accessories like glasses or hats that may obstruct your face.",
+    "Ensure your face is fully visible within the oval guide.",
+    "Keep your face steady and look directly at the camera.",
+    "Keep a neutral face while the detection is running.",
+  ];
+
   return (
     <Modal
       animationType="slide"
@@ -149,36 +157,40 @@ const ModalFaceRecognition = ({ onRequestClose, onSuccess }: IModalFace) => {
                 <Text className="text-xl text-white">No Camera Detected</Text>
               </View>
             ) : RNVC.Camera.getCameraPermissionStatus() === "granted" ? (
-              <View>
+              <View className="gap-2">
                 <View style={{ borderRadius: 8, overflow: "hidden" }}>
                   {isRecognitionActive ? (
                     <Camera
-                      style={{ height: 384, width: "100%" }}
+                      style={{ height: 256, width: "100%" }}
                       device={device}
                       faceDetectionCallback={handleFacesDetection}
                       faceDetectionOptions={faceDetectionOptions}
                       isActive={isRecognitionActive}
-                      zoom={1.2}
+                      zoom={1.3}
                     />
                   ) : (
                     <RNVC.Camera
-                      style={{ height: 384, width: "100%" }}
+                      style={{ height: 256, width: "100%" }}
                       device={device}
                       isActive={true}
-                      zoom={1.2}
+                      zoom={1.3}
                     />
                   )}
                   <FaceGuideOverlay />
                 </View>
-
-                <View className="mt-2">
-                  <Text className=" text-lg text-uBlack">
-                    - Align your face within the circle
-                  </Text>
-                  <Text className=" text-lg text-uBlack -mt-2">
-                    - Good lighting is required
-                  </Text>
-                </View>
+                {isRecognitionActive ? (
+                  <View className="w-full h-16">
+                    <Loading
+                      loadingPrompt="Keep your face steady."
+                      indicatorSize="small"
+                    />
+                  </View>
+                ) : (
+                  <FaceCameraTip
+                    title="Face Recognition Tips:"
+                    tips={recognitionTips}
+                  />
+                )}
 
                 <Button
                   title={isRecognitionActive ? "Stop" : "Authenticate"}
@@ -186,7 +198,6 @@ const ModalFaceRecognition = ({ onRequestClose, onSuccess }: IModalFace) => {
                     setLandmarkBuffer([]);
                     setIsRecognitionActive((prev) => !prev);
                   }}
-                  containerStyles="mt-4"
                 />
               </View>
             ) : (

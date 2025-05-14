@@ -1,6 +1,6 @@
 import { Landmarks } from "react-native-vision-camera-face-detector";
 
-const REQUIRED_KEYS: (keyof Landmarks)[] = [
+export const REQUIRED_FACE_LANDMARK_KEYS: (keyof Landmarks)[] = [
   "LEFT_EYE",
   "RIGHT_EYE",
   "NOSE_BASE",
@@ -12,7 +12,7 @@ const REQUIRED_KEYS: (keyof Landmarks)[] = [
 export const extractDescriptorFromLandmarks = (
   landmarks: Landmarks
 ): number[][] => {
-  return normalizePoints(landmarks, REQUIRED_KEYS);
+  return normalizePoints(landmarks, REQUIRED_FACE_LANDMARK_KEYS);
 };
 
 /**
@@ -27,7 +27,7 @@ export const extractDescriptorFromLandmarks = (
  */
 export function isValidLandmarks(landmarks: Landmarks | undefined): boolean {
   if (!landmarks) return false;
-  return REQUIRED_KEYS.every((key) => {
+  return REQUIRED_FACE_LANDMARK_KEYS.every((key) => {
     const point = landmarks[key];
     return (
       point !== undefined &&
@@ -143,7 +143,7 @@ export const authenticateFace = (
   threshold: number = 0.85
 ): boolean => {
   const normalizedDescriptors = currentBuffer.map((current) =>
-    normalizePoints(current, REQUIRED_KEYS)
+    normalizePoints(current, REQUIRED_FACE_LANDMARK_KEYS)
   );
 
   const avgCurrent = averageNormalizedPoints(normalizedDescriptors);
