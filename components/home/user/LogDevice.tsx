@@ -1,6 +1,6 @@
 import { View, Text, TouchableOpacity, Image } from "react-native";
 import React, { useEffect, useState } from "react";
-import ModalFace from "./ModalFace";
+import ModalFaceRecognition from "./ModalFaceRecognition";
 import ModalDevices from "./ModalDevices";
 import image from "@/constants/image";
 import { FontAwesome6 } from "@expo/vector-icons";
@@ -69,7 +69,7 @@ const LogDevice = () => {
       </TouchableOpacity>
 
       {isFaceModal && (
-        <ModalFace
+        <ModalFaceRecognition
           onRequestClose={handleCloseModal}
           onSuccess={handleOnFaceSuccess}
         />

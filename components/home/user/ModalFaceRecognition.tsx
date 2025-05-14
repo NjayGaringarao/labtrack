@@ -17,7 +17,7 @@ interface IModalFace {
   onSuccess: () => void;
 }
 
-const ModalFace = ({ onRequestClose, onSuccess }: IModalFace) => {
+const ModalFaceRecognition = ({ onRequestClose, onSuccess }: IModalFace) => {
   const { userInfo } = useGlobalContext();
   const [isRecognitionActive, setIsRecognitionActive] = useState(false);
   const [landmarkBuffer, setLandmarkBuffer] = useState<Landmarks[]>([]);
@@ -39,7 +39,7 @@ const ModalFace = ({ onRequestClose, onSuccess }: IModalFace) => {
     minFaceSize: 0.15,
   };
 
-  const normalizedDescriptor = useMemo(() => {
+  const normalizedStoredDescriptor = useMemo(() => {
     if (!userInfo.face_descriptor) return null;
     return extractDescriptorFromLandmarks(userInfo.face_descriptor);
   }, [userInfo.face_descriptor]);
@@ -52,7 +52,7 @@ const ModalFace = ({ onRequestClose, onSuccess }: IModalFace) => {
         !isRecognitionActive ||
         isProcessingRef.current ||
         now - lastDetectionTimeRef.current < DETECTION_INTERVAL_MS ||
-        !normalizedDescriptor ||
+        !normalizedStoredDescriptor ||
         !faces[0]?.landmarks
       ) {
         return;
@@ -93,17 +93,17 @@ const ModalFace = ({ onRequestClose, onSuccess }: IModalFace) => {
         isProcessingRef.current = false;
       }, DETECTION_INTERVAL_MS);
     },
-    [isRecognitionActive, normalizedDescriptor]
+    [isRecognitionActive, normalizedStoredDescriptor]
   );
 
   useEffect(() => {
     if (
       isRecognitionActive &&
       landmarkBuffer.length >= LANDMARK_BUFFER_SIZE &&
-      normalizedDescriptor
+      normalizedStoredDescriptor
     ) {
       const success = authenticateFace(
-        userInfo.face_descriptor!,
+        normalizedStoredDescriptor,
         landmarkBuffer
       );
 
@@ -220,4 +220,4 @@ const ModalFace = ({ onRequestClose, onSuccess }: IModalFace) => {
   );
 };
 
-export default ModalFace;
+export default ModalFaceRecognition;
