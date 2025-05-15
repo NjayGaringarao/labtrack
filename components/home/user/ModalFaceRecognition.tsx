@@ -37,9 +37,8 @@ const ModalFaceRecognition = ({ onRequestClose, onSuccess }: IModalFace) => {
   const hasProcessedRef = useRef(false);
 
   const faceDetectionOptions: FaceDetectionOptions = {
-    performanceMode: "fast",
+    performanceMode: "accurate",
     landmarkMode: "all",
-    contourMode: "all",
     minFaceSize: 0.15,
   };
 

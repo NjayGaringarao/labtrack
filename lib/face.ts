@@ -117,7 +117,7 @@ function compareNormalizedPoints(a: number[][], b: number[][]): number {
     distances.reduce((sum, d) => sum + d, 0) / distances.length;
 
   // Convert to similarity (1 = perfect match, 0 = worst)
-  const similarity = Math.exp(-avgDistance * 9.555); // You can tune this scale
+  const similarity = Math.exp(-avgDistance * 5); // You can tune this scale
   return similarity;
 }
 
