@@ -48,24 +48,19 @@ export const toCredentials = (document: Models.Document): Credentials => {
 };
 
 export const toLog = (document: Models.Document): Log => {
-  try {
-    return {
-      id: document.$id,
-      device: document.device[0] ? toDevice(document.device[0]) : undefined,
-      user: document.user[0] ? toUserInfo(document.user[0]) : undefined,
-      start: document.start,
-      end: document.end,
-      user_id: document.user_id,
-      user_name: document.user_name,
-      user_role: document.user_role,
-      device_id: document.device_id,
-      device_alias: document.device_alias,
-      device_location: document.device_location,
-    };
-  } catch (error) {
-    console.log("Aaaaaaaaa");
-    throw error;
-  }
+  return {
+    id: document.$id,
+    device: document.device[0] ? toDevice(document.device[0]) : undefined,
+    user: document.user[0] ? toUserInfo(document.user[0]) : undefined,
+    start: document.start,
+    end: document.end,
+    user_id: document.user_id,
+    user_name: document.user_name,
+    user_role: document.user_role,
+    device_id: document.device_id,
+    device_alias: document.device_alias,
+    device_location: document.device_location,
+  };
 };
 
 export const toLogList = (documents: Models.Document[]): Log[] => {

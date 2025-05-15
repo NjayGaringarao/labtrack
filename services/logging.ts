@@ -49,8 +49,6 @@ export const getLogs = async () => {
       [Query.orderDesc("$createdAt")]
     );
 
-    console.log(JSON.stringify(result, null, 2));
-
     return toLogList(result.documents);
   } catch (error) {
     console.log("logging.getLogs : ", error);
