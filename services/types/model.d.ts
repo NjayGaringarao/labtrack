@@ -34,7 +34,7 @@ export type Session = {
 export type Log = {
   id: string;
   device?: Device;
-  user?: User;
+  user?: UserInfo;
   start: Date;
   end: Date;
   user_id: string;

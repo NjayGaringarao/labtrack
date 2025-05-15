@@ -26,8 +26,8 @@ const LogItem = ({ log }: ILogItem) => {
   return (
     <>
       <View className="p-4 border border-secondary flex-row items-center gap-2">
-        {log.user_name ? (
-          <ProfilePicture userInfo={log.user} containerStyle="h-11 w-11" />
+        {log.user ? (
+          <ProfilePicture userInfo={log.user} containerStyle="max-h-12 w-12" />
         ) : (
           <View className="border-4 border-primary rounded-full bg-primary shadow-md shadow-black items-center justify-center w-11 h-11 overflow-hidden">
             <FontAwesome name="user-circle" size={31} color={color.uBlack} />
@@ -58,7 +58,7 @@ const LogItem = ({ log }: ILogItem) => {
           <View className="absolute h-full w-full justify-center items-center ">
             <View className="bg-background p-6 rounded-lg w-11/12">
               <View className="flex-row items-center gap-2">
-                {log.user_name ? (
+                {log.user ? (
                   <ProfilePicture userInfo={log.user} />
                 ) : (
                   <View className="border-4 border-primary rounded-full bg-primary shadow-md shadow-black items-center justify-center w-16 h-16 overflow-hidden">
