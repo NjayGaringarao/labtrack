@@ -231,7 +231,7 @@ const SignUpForm = () => {
           <Image source={image.labrack} className="w-full h-full" />
         </View>
         <Text className="w-full text-6xl font-bold text-uBlack mt-2 flex-1">
-          Sign In
+          Sign Up
         </Text>
       </View>
       <View className="w-full border border-secondary bg-background p-4 rounded-xl shadow-md">
